@@ -1,15 +1,12 @@
 var { useState, useMemo, useReducer } = preactHooks;
 var h = preact.h;
 
-export function App(props) {
+export function App() {
 
   const [center, setCenter] = useState(180)
   const [angle, setAngle] = useState(30)
   const [hueNames, setNames] = useReducer(
-    (s, a) => {
-      const [which, name] = a
-      return s.map((n, ix) => ix == which ? name : n)
-    },
+    switchReducer,
     ['left', 'center', 'right', 'back']
   )
 
@@ -20,18 +17,11 @@ export function App(props) {
     [hueNames[3], 180]
   ], [hueNames, angle])
 
-  const litPalette = [
-    ['dark', 35],
-    ['base', 50],
-    ['lite', 75],
-    ['hint', 95]
-  ]
-
-  function makePalette(center) {
+  const palette = useMemo(() => {
     const theme = {}
 
-    for (let [hue, hueval] of huePalette) {
-      for (let [lit, litval] of litPalette) {
+    for (const [hue, hueval] of huePalette) {
+      for (const [lit, litval] of litPalette) {
         theme["--c-" + hue + '-' + lit] = "hsl(" +
           ((center + hueval) % 360) + ", 50%, " +
           Math.floor(litAdjust(((center + hueval) % 360), litval)) + "%)"
@@ -40,9 +30,7 @@ export function App(props) {
     }
 
     return theme
-  }
-
-  const palette = makePalette(center)
+  }, [huePalette, center])
 
   return (
     h('main', null,
@@ -117,6 +105,18 @@ export function App(props) {
   )
 }
 
+const litPalette = [
+  ['dark', 35],
+  ['base', 50],
+  ['lite', 75],
+  ['hint', 95]
+]
+
+function switchReducer(s, a) {
+  const [which, name] = a
+  return s.map((n, ix) => ix == which ? name : n)
+}
+
 function lumAdjust(hue) {
   // MAGIC NUMBERS
   const a = 0.57;
@@ -140,7 +140,9 @@ function litAdjust(hue, lit) {
 }
 
 const copyright = [
+  h("a", { href: "https://github.com/AliceCengal/palette-designer"}, "Github"),
+  h("br"),
   "site design and logo",
-  h("br", null),
+  h("br"),
   "\xA9 Athran Zuhail 2022 all\xA0rights\xA0reserved"
 ]
