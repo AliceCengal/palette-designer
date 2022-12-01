@@ -25,7 +25,7 @@ export function App() {
         theme["--c-" + hue + '-' + lit] = "hsl(" +
           ((center + hueval) % 360) + ", 50%, " +
           Math.floor(litAdjust(((center + hueval) % 360), litval)) + "%)"
-          // litval + "%)"
+        // litval + "%)"
       }
     }
 
@@ -129,18 +129,16 @@ function lumAdjust(hue) {
 
   const chipmunk = a * sine360 + (1 - a) * cos120
   const ferret = c * chipmunk + d
-  return f / ferret
+  return (-f / ferret) + 1
 }
 
 function litAdjust(hue, lit) {
-  if (lit > 90) { return 90 + 5 * lumAdjust(hue) }
-  if (lit > 55) { return 50 + 25 * lumAdjust(hue) }
-  if (lit > 40) { return 30 + 20 * lumAdjust(hue) }
-  return 15 + 20 * lumAdjust(hue)
+  const f = lumAdjust(hue)
+  return f * lit * lit / 100 + (1 - f) * lit
 }
 
 const copyright = [
-  h("a", { href: "https://github.com/AliceCengal/palette-designer"}, "Github"),
+  h("a", { href: "https://github.com/AliceCengal/palette-designer" }, "Github"),
   h("br"),
   "site design and logo",
   h("br"),
