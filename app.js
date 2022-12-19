@@ -4,6 +4,7 @@ var h = preact.h;
 export function App() {
 
   const [center, setCenter] = useState(180)
+  const [saturation, setSaturation] = useState(50)
   const [angle, setAngle] = useState(30)
   const [hueNames, setNames] = useReducer(
     switchReducer,
@@ -23,14 +24,14 @@ export function App() {
     for (const [hue, hueval] of huePalette) {
       for (const [lit, litval] of litPalette) {
         theme["--c-" + hue + '-' + lit] = "hsl(" +
-          ((center + hueval) % 360) + ", 50%, " +
+          ((center + hueval) % 360) + ", " + saturation + "%, " +
           Math.floor(litAdjust(((center + hueval) % 360), litval)) + "%)"
         // litval + "%)"
       }
     }
 
     return theme
-  }, [huePalette, center])
+  }, [huePalette, center, saturation])
 
   return (
     h('main', null,
@@ -39,7 +40,7 @@ export function App() {
           ...(
             Array(12).fill(0).map((i, ix) =>
               h("div", {
-                style: "background-color: hsl(" + (ix * 30) + ", 50%, 50%)"
+                style: "background-color: hsl(" + (ix * 30) + ", " + saturation + "%, 50%)"
               }, "\u2800")
             )
           )
@@ -48,21 +49,28 @@ export function App() {
           ...(
             Array(12).fill(0).map((i, ix) =>
               h("div", {
-                style: "background-color: hsl(" + (ix * 30) + ", 50%, " +
+                style: "background-color: hsl(" + (ix * 30) + ", " + saturation + "%, " +
                   litAdjust(ix * 30, 50).toFixed(2) + "%)"
               }, "\u2800")
             )
           )
         )),
       h('div', { class: "slider" },
-        h("label", null, "Primary hue: " + center.toString()),
+        h("label", null, "Primary hue: " + center.toString() + "\u00b0"),
         h("input", {
           type: "range",
           value: center,
           onChange: e => setCenter(Number(e.target.value)),
           min: 0, max: 355, step: 5
         }),
-        h("label", null, "Adjacent angle: " + angle.toString()),
+        h("label", null, "Saturation: " + saturation.toString() + "%"),
+        h("input", {
+          type: "range",
+          value: saturation,
+          onChange: e => setSaturation(Number(e.target.value)),
+          min: 0, max: 100, step: 2
+        }),
+        h("label", null, "Adjacent angle: " + angle.toString() + "\u00b0"),
         h("input", {
           type: "range",
           value: angle,
