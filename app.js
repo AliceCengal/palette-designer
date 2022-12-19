@@ -40,7 +40,7 @@ export function App() {
           ...(
             Array(12).fill(0).map((i, ix) =>
               h("div", {
-                style: "background-color: hsl(" + (ix * 30) + ", " + saturation + "%, 50%)"
+                style: "background-color: hsl(" + (ix * 30 + 15) + ", " + saturation + "%, 50%)"
               }, "\u2800")
             )
           )
@@ -49,7 +49,7 @@ export function App() {
           ...(
             Array(12).fill(0).map((i, ix) =>
               h("div", {
-                style: "background-color: hsl(" + (ix * 30) + ", " + saturation + "%, " +
+                style: "background-color: hsl(" + (ix * 30 + 15) + ", " + saturation + "%, " +
                   litAdjust(ix * 30, 50).toFixed(2) + "%)"
               }, "\u2800")
             )
