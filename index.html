@@ -36,10 +36,21 @@
       gap: 1rem;
     }
 
+    .palette2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 1rem;  
+    }
+
     .palette>div {
       text-align: center;
       padding-block: 2rem;
       border-radius: 4px;
+    }
+
+    .palette2>div {
+      text-align: center;
+      padding-block: 0.5rem;
     }
 
     .palette>div[id*="base"],

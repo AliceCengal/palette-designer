@@ -18,13 +18,16 @@ export function App() {
     [hueNames[3], 180]
   ], [hueNames, angle])
 
+  const mode = window.location.search
+
   const palette = useMemo(() => {
     const theme = {}
 
     for (const [hue, hueval] of huePalette) {
-      for (const [lit, litval] of litPalette) {
+      for (const [lit, litval] of (mode ? litPalette2 : litPalette)) {
+        let sat = (mode ? (litval - 50) * 2 : saturation)
         theme["--c-" + hue + '-' + lit] = "hsl(" +
-          ((center + hueval) % 360) + ", " + saturation + "%, " +
+          ((center + hueval) % 360) + ", " + sat + "%, " +
           Math.floor(litAdjust(((center + hueval) % 360), litval)) + "%)"
         // litval + "%)"
       }
@@ -63,8 +66,8 @@ export function App() {
           onChange: e => setCenter(Number(e.target.value)),
           min: 0, max: 355, step: 5
         }),
-        h("label", null, "Saturation: " + saturation.toString() + "%"),
-        h("input", {
+        !mode && h("label", null, "Saturation: " + saturation.toString() + "%"),
+        !mode && h("input", {
           type: "range",
           value: saturation,
           onChange: e => setSaturation(Number(e.target.value)),
@@ -77,9 +80,9 @@ export function App() {
           onChange: e => setAngle(Number(e.target.value)),
           min: 5, max: 175, step: 5
         })),
-      h('div', { class: "palette", style: palette },
+      h('div', { class: (mode ? "palette2" : "palette"), style: palette },
         ...(
-          litPalette.map(([lit, litval]) =>
+          (mode ? litPalette2 : litPalette).map(([lit, litval]) =>
             huePalette.flatMap(([hue, hueval]) =>
               h('div', {
                 id: hue + '-' + lit,
@@ -119,6 +122,10 @@ const litPalette = [
   ['lite', 75],
   ['hint', 95]
 ]
+
+const litPalette2 = Array(9).fill(1).map((i, ix) =>
+  [(ix + 1).toString(), 55 + ix * 5]
+)
 
 function switchReducer(s, a) {
   const [which, name] = a
