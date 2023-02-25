@@ -1,5 +1,5 @@
-var { useState, useMemo, useReducer } = preactHooks;
-var h = preact.h;
+const { useState, useMemo, useReducer } = preactHooks;
+const h = preact.h;
 
 export function App() {
 
@@ -8,28 +8,26 @@ export function App() {
   const [angle, setAngle] = useState(30)
   const [hueNames, setNames] = useReducer(
     switchReducer,
-    ['left', 'center', 'right', 'back']
+    ['base', 'neut', 'good', 'warn', 'evil']
   )
 
   const huePalette = useMemo(() => [
-    [hueNames[0], 360 - angle],
-    [hueNames[1], 0],
-    [hueNames[2], angle],
-    [hueNames[3], 180]
-  ], [hueNames, angle])
-
-  const mode = window.location.search
+    [hueNames[0], center],
+    [hueNames[1], center],
+    [hueNames[2], 120],
+    [hueNames[3], 45],
+    [hueNames[4], 0]
+  ], [hueNames, center])
 
   const palette = useMemo(() => {
     const theme = {}
 
     for (const [hue, hueval] of huePalette) {
-      for (const [lit, litval] of (mode ? litPalette2 : litPalette)) {
-        let sat = (mode ? (litval - 50) * 2 : saturation)
+      for (const [lit, litval] of litPalette2) {
         theme["--c-" + hue + '-' + lit] = "hsl(" +
-          ((center + hueval) % 360) + ", " + sat + "%, " +
-          Math.floor(litAdjust(((center + hueval) % 360), litval)) + "%)"
-        // litval + "%)"
+          hueval + ", " +
+          (hue === 'neut' ? 5 : saturation) + "%, " +
+          (hue === 'neut' ? litval : Math.floor(litAdjust(((hueval) % 360), litval))) + "%)"
       }
     }
 
@@ -66,23 +64,16 @@ export function App() {
           onChange: e => setCenter(Number(e.target.value)),
           min: 0, max: 355, step: 5
         }),
-        !mode && h("label", null, "Saturation: " + saturation.toString() + "%"),
-        !mode && h("input", {
+        h("label", null, "Saturation: " + saturation.toString() + "%"),
+        h("input", {
           type: "range",
           value: saturation,
           onChange: e => setSaturation(Number(e.target.value)),
           min: 0, max: 100, step: 2
-        }),
-        h("label", null, "Adjacent angle: " + angle.toString() + "\u00b0"),
-        h("input", {
-          type: "range",
-          value: angle,
-          onChange: e => setAngle(Number(e.target.value)),
-          min: 5, max: 175, step: 5
         })),
-      h('div', { class: (mode ? "palette2" : "palette"), style: palette },
+      h('div', { class: "palette2", style: palette },
         ...(
-          (mode ? litPalette2 : litPalette).map(([lit, litval]) =>
+          litPalette2.map(([lit, litval]) =>
             huePalette.flatMap(([hue, hueval]) =>
               h('div', {
                 id: hue + '-' + lit,
@@ -116,15 +107,8 @@ export function App() {
   )
 }
 
-const litPalette = [
-  ['dark', 35],
-  ['base', 50],
-  ['lite', 75],
-  ['hint', 95]
-]
-
 const litPalette2 = Array(9).fill(1).map((i, ix) =>
-  [(ix + 1).toString(), 55 + ix * 5]
+  [(ix + 1).toString(), 31 + ix * 8]
 )
 
 function switchReducer(s, a) {
