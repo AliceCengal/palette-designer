@@ -1,88 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Palette designer</title>
-    <link rel="shortcut icon" href="favicon.ico" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-reboot.min.css"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palette designer</title>
+  <link rel="shortcut icon" href="favicon.ico" />
 
-    <script src="https://unpkg.com/preact@latest/dist/preact.min.js"></script>
-    <script src="https://unpkg.com/preact@latest/hooks/dist/hooks.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-reboot.min.css" />
 
-    <style>
-      main {
-        width: min(50rem, calc(100% - 2rem));
-        margin: 4rem auto;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
+  <script src="https://unpkg.com/preact@latest/dist/preact.min.js"></script>
+  <script src="https://unpkg.com/preact@latest/hooks/dist/hooks.umd.js"></script>
 
-      .slider {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: justify;
-        text-align: center;
-        gap: 1rem;
-      }
+  <style>
+    main {
+      width: min(50rem, calc(100% - 2rem));
+      margin: 4rem auto;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
 
-      .palette2 {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        column-gap: 1rem;
-      }
+    .slider {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: justify;
+      text-align: center;
+      gap: 1rem;
+    }
 
-      .palette > div {
-        text-align: center;
-        padding-block: 2rem;
-        border-radius: 4px;
-      }
+    .palette2 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 1rem;
+    }
 
-      .palette2 > div {
-        text-align: center;
-        padding-block: 0.5rem;
-      }
+    .palette2>input {
+      min-width: 0;
+    }
 
-      .palette > div[id*="base"],
-      .palette > div[id*="dark"] {
-        color: white;
-      }
+    .palette>div {
+      text-align: center;
+      padding-block: 2rem;
+      border-radius: 4px;
+    }
 
-      .wheel {
-        display: flex;
-      }
+    .palette2>div {
+      text-align: center;
+      padding-block: 0.5rem;
+    }
 
-      .wheel div {
-        flex-grow: 1;
-        height: 3rem;
-      }
+    .palette>div[id*="base"],
+    .palette>div[id*="dark"] {
+      color: white;
+    }
 
-      .setting {
-        display: flex;
-        gap: 1rem;
-      }
+    .wheel {
+      display: flex;
+    }
 
-      .setting input {
-        flex-grow: 1;
-      }
+    .wheel div {
+      flex-grow: 1;
+      height: 3rem;
+    }
 
-      .output {
-        font-family: monospace;
-      }
-    </style>
-  </head>
+    .output {
+      font-family: monospace;
+    }
+  </style>
+</head>
 
-  <body>
-    <script type="module">
-      import { App } from "./app.js";
+<body>
+  <script type="module">
+    import { App } from "./app.js";
 
-      preact.render(preact.h(App), document.body);
-    </script>
-  </body>
+    preact.render(preact.h(App), document.body);
+  </script>
+</body>
+
 </html>
