@@ -3,7 +3,6 @@ const { h, Fragment } = preact;
 // import { formatDistanceStrict } from "date-fns";
 
 const CLOCK_GRID_S = {
-  margin: '2rem',
   display: 'grid',
   gridTemplateColumns: '1fr auto 1fr',
   columnGap: '1rem',
@@ -11,6 +10,12 @@ const CLOCK_GRID_S = {
 
 const CLOCK_GRID_TITLE_S = {
   gridColumn: '1 / -1'
+}
+
+const TS_TEXT_S = {
+  style: {
+    fontSize: 'small'
+  }
 }
 
 export function App() {
@@ -96,9 +101,9 @@ function TimeRangeRow10({ base, ix }) {
       h('span', null, ' - '),
       h('span', null, t2),
 
-      h('span', null, d1.toISOString()),
-      h('span', null, ' - '),
-      h('span', null, d2.toISOString()),
+      h('span', TS_TEXT_S, d1.toISOString().slice(0, -5)),
+      h('span', TS_TEXT_S, '-'),
+      h('span', TS_TEXT_S, d2.toISOString().slice(0, -5)),
 
       h('div', { style: { gridColumn: '1 / -1', marginBottom: '0.5rem' } },
         formatDistanceStrict(d1, d2)
@@ -128,9 +133,9 @@ function TimeRangeRow16({ base, ix }) {
       h('span', null, ' - '),
       h('span', null, t2),
 
-      h('span', null, d1.toISOString()),
-      h('span', null, ' - '),
-      h('span', null, d2.toISOString()),
+      h('span', TS_TEXT_S, d1.toISOString().slice(0, -5)),
+      h('span', TS_TEXT_S, '-'),
+      h('span', TS_TEXT_S, d2.toISOString().slice(0, -5)),
 
       h('div', { style: { gridColumn: '1 / -1', marginBottom: '0.5rem' } },
         formatDistanceStrict(d1, d2)
@@ -160,9 +165,9 @@ function TimeRangeRow36({ base, ix }) {
       h('span', null, ' - '),
       h('span', null, t2),
 
-      h('span', null, d1.toISOString()),
-      h('span', null, ' - '),
-      h('span', null, d2.toISOString()),
+      h('span', TS_TEXT_S, d1.toISOString().slice(0, -5)),
+      h('span', TS_TEXT_S, '-'),
+      h('span', TS_TEXT_S, d2.toISOString().slice(0, -5)),
 
       h('div', { style: { gridColumn: '1 / -1', marginBottom: '0.5rem' } },
         formatDistanceStrict(d1, d2)
