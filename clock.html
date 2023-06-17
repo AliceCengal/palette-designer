@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palette designer</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-reboot.min.css" />
+
+  <script src="https://unpkg.com/preact@latest/dist/preact.min.js"></script>
+  <script src="https://unpkg.com/preact@latest/hooks/dist/hooks.umd.js"></script>
+
+  <style>
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 0;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import { App } from "./clock.js";
+
+    preact.render(preact.h(App), document.body);
+  </script>
+</body>
+
+</html>
